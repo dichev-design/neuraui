@@ -1,16 +1,30 @@
-import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import Dashboard from "./Dashboard";
 
 function App() {
   return (
-    <div className="flex h-screen bg-gray-900">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen bg-zinc-100 text-zinc-900 flex">
 
-      {/* Main content */}
-      <main className="flex-1 p-6 overflow-auto">
-        <h2 className="text-3xl font-bold mb-4">Dashboard</h2>
-      </main>
+      {/* Sidebar (hidden on mobile) */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+
+        {/* Mobile Top Bar */}
+        <div className="md:hidden bg-zinc-950 text-white p-4 text-lg font-semibold">
+          NeuraUI
+        </div>
+
+        <main className="flex-1 p-4 md:p-8">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }

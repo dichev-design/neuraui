@@ -1,35 +1,43 @@
-import React from "react";
-import { FiHome, FiEdit, FiClock, FiStar, FiSettings } from "react-icons/fi";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
     const menuItems = [
-        { name: "Dashboard", icon: <FiHome /> },
-        { name: "Prompt Generator", icon: <FiEdit /> },
-        { name: "History", icon: <FiClock /> },
-        { name: "Favorites", icon: <FiStar /> },
-        { name: "Settings", icon: <FiSettings /> },
+        { name: "Dashboard", path: "/" },
+        { name: "Generate", path: "/generate" },
+        { name: "History", path: "/history" },
+        { name: "Favorites", path: "/favorites" },
+        { name: "Settings", path: "/settings" },
     ];
 
     return (
-        <aside className="w-64 min-h-screen bg-gray-900 text-white flex flex-col p-6 shadow-lg">
-            {/* Logo / App Name */}
-            <h1 className="text-3xl font-bold mb-10 tracking-wide">NeuraUI</h1>
+        <aside className="w-64 min-h-screen bg-zinc-950 text-white p-6 flex flex-col">
 
-            {/* Navigation Menu */}
-            <nav className="flex flex-col mt-4 space-y-3">
+            <h1 className="text-2xl font-bold mb-10">
+                NeuraUI
+            </h1>
+
+            <nav className="flex flex-col gap-2">
                 {menuItems.map((item) => (
-                    <button
+                    <NavLink
                         key={item.name}
-                        className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 text-lg"
+                        to={item.path}
+                        end={item.path === "/"}
+                        className={({ isActive }) =>
+                            `px-4 py-3 rounded-lg text-sm font-medium transition ${isActive
+                                ? "bg-violet-600 text-white"
+                                : "hover:bg-zinc-800 text-zinc-300"
+                            }`
+                        }
                     >
-                        {item.icon} <span>{item.name}</span>
-                    </button>
+                        {item.name}
+                    </NavLink>
                 ))}
             </nav>
 
-            {/* Optional bottom content */}
-            <div className="mt-auto text-gray-400 text-sm px-4">
-                v1.0.0
+            <div className="mt-auto pt-10">
+                <button className="w-full bg-violet-600 py-3 rounded-lg font-medium hover:opacity-90 transition">
+                    Upgrade
+                </button>
             </div>
         </aside>
     );
