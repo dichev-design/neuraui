@@ -15,8 +15,7 @@ app.post("/api/generate", async (req, res) => {
     const { prompt } = req.body;
 
     if (!prompt) {
-        res.status(400).json({ error: "Prompt is required" });
-        return;
+        return res.status(400).json({ error: "Prompt is required" });
     }
 
     try {
@@ -33,9 +32,17 @@ app.post("/api/generate", async (req, res) => {
         });
 
         const data = await response.json();
+
+        console.log("OPENROUTER RESPONSE:", data); // ⭐ ADD THIS
+
+        if (!response.ok) {
+            return res.status(response.status).json(data);
+        }
+
         res.json(data);
+
     } catch (err) {
-        console.error(err);
+        console.error("SERVER ERROR:", err);
         res.status(500).json({ error: err.message });
     }
 });

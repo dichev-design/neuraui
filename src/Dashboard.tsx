@@ -12,7 +12,7 @@ export default function Dashboard() {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:5000/api/generate", {
+            const response = await fetch("/api/generate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ prompt: input })  // use input
@@ -23,10 +23,12 @@ export default function Dashboard() {
             }
 
             const data = await response.json();
-            setResult(data.choices[0]?.message?.content || "No response");
-        } catch (err: any) {
-            console.error(err);
-            setResult(`Error: ${err.message}`);
+            setResult(
+                data?.choices?.[0]?.message?.content ||
+                data?.error?.message ||
+                data?.error ||
+                "No response"
+            );
         } finally {
             setLoading(false);
         }
